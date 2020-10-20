@@ -1,25 +1,50 @@
 <script>
-	import Header from './UI/Header.svelte'
-	
+	import { createEventDispatcher } from "svelte";
+	import Header from './UI/Header.svelte';
+	import Button from './UI/Button.svelte';
+
+	const LITTLE = 'bara lite kvar'
+	const MIDDLE = 'medelmycket kvar'
+	const FULL = 'typ full'
+
 	let spiceName;
 	let spiceItems = {};
 	let buySpiceItems ={};
-	let ammount = 'empty';
+	let amount = 'okänt';
+
 
 	function addSpice() {
-		spiceItems = {...spiceItems, [spiceName.toLowerCase()]: {ammount}}
+		if (spiceName) {
+			spiceItems = {...spiceItems, [spiceName.toLowerCase()]: {amount}}
+		} else {
+		alert('Du har inte fyllt i ett kryddnamn')}
 	}
 
 	function buySpice() {
 		if (Object.keys(spiceItems).find(() => spiceName.toLowerCase())) {
 			alert('Du har denna krydda i ditt kryddskåp')
-		} else {
-			buySpiceItems= {...buySpiceItems, [spiceName.toLowerCase()]: {ammount:'empty'}}}
+		} else if (!spiceName) {
+			alert('Du har inte fyllt i ett kryddnamn')
+		}else {
+			buySpiceItems= {...buySpiceItems, [spiceName.toLowerCase()]: {amount:'empty'}}}
 	}
 
 	function cancel () {
-		console.log('Close modal')
+		console.log('Fixa så att modal stängs')
 	}
+
+
+function handleOnClickSoonEmpty() {
+	amount = LITTLE
+}
+
+function handleOnClickMedium() {
+	amount = MIDDLE
+}
+
+function handleOnClickFull() {
+	amount = FULL
+}
 
 	$: console.log(spiceItems);	//detta är ett objekt
 	//$: console.log(Object.keys(spiceList)) //detta är en array
@@ -36,15 +61,15 @@
 	<div class="modal">
 		<p>Fyll i din krydda här:</p>
 		<input type="text" bind:value={spiceName}>
-		<button on:click={() => (ammount='bara lite kvar')}>Bara lite kvar</button>
-		<button on:click={() => (ammount='medelmycket kvar')}>Medelmycket</button>
-		<button on:click={() => (ammount='typ full')}>Full</button>
+		<button class:selected={amount === LITTLE} on:click={handleOnClickSoonEmpty}>Bara lite kvar</button>
+		<button class:selected={amount === MIDDLE} on:click={handleOnClickMedium}>Medelmycket</button>
+		<button class:selected={amount === FULL} on:click={handleOnClickFull}>Full</button>
 		<div class="content">	
-			<button on:click={addSpice}>Spara kryddan</button>
-			<button on:click={buySpice}>Köp!</button>
+			<Button on:click={addSpice}>Spara kryddan</Button>
+			<Button on:click={buySpice}>Köp!</Button>
 		</div>
 		<footer>
-			<button on:click={cancel}>Stäng</button>
+			<Button on:click={cancel}>Stäng</Button>
 		</footer>
 	</div>
 
@@ -106,4 +131,9 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
     overflow: scroll;
   }
+	.selected {
+    background: #01a129;
+    border-color: #01a129;
+  }
+
 </style>
