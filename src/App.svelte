@@ -1,50 +1,41 @@
 <script>
-	import { createEventDispatcher } from "svelte";
 	import Header from './UI/Header.svelte';
 	import Button from './UI/Button.svelte';
+	import EditSpiceItems from './Spices/EditSpiceItems.svelte';
 
-	const LITTLE = 'bara lite kvar'
-	const MIDDLE = 'medelmycket kvar'
-	const FULL = 'typ full'
-
-	let spiceName;
 	let spiceItems = {};
 	let buySpiceItems ={};
-	let amount = 'okänt';
 
+	let editMode;
 
-	function addSpice() {
+	function addSpice(event) {
+		console.log(event)
+		const {spiceName, amount} = event.detail;
 		if (spiceName) {
-			spiceItems = {...spiceItems, [spiceName.toLowerCase()]: {amount}}
+			if (amount !== 'okänt') {
+				spiceItems = {...spiceItems, [spiceName.toLowerCase()]: {amount}}
+			} else {
+				alert('Ange hur mycket du har av kryddan med knapparna till höger')
+			}
 		} else {
 		alert('Du har inte fyllt i ett kryddnamn')}
-	}
+		}
 
-	function buySpice() {
+	function buySpice(event) {
+		console.log(event)
+		const {spiceName} = event.detail;
 		if (Object.keys(spiceItems).find(() => spiceName.toLowerCase())) {
-			alert('Du har denna krydda i ditt kryddskåp')
+			alert('Du har redan denna krydda i ditt kryddskåp')
 		} else if (!spiceName) {
 			alert('Du har inte fyllt i ett kryddnamn')
 		}else {
 			buySpiceItems= {...buySpiceItems, [spiceName.toLowerCase()]: {amount:'empty'}}}
+  }
+
+	function cancelEdit(event) {
+		editMode = null;
+		console.log(event)
 	}
-
-	function cancel () {
-		console.log('Fixa så att modal stängs')
-	}
-
-
-function handleOnClickSoonEmpty() {
-	amount = LITTLE
-}
-
-function handleOnClickMedium() {
-	amount = MIDDLE
-}
-
-function handleOnClickFull() {
-	amount = FULL
-}
 
 	$: console.log(spiceItems);	//detta är ett objekt
 	//$: console.log(Object.keys(spiceList)) //detta är en array
@@ -54,26 +45,19 @@ function handleOnClickFull() {
 <Header />
 
 <main>
-	<p>Dina kryddor:</p>
 
-	<!--Här kommer min modal-->
-	<div class="modal-backdrop"/>
-	<div class="modal">
-		<p>Fyll i din krydda här:</p>
-		<input type="text" bind:value={spiceName}>
-		<button class:selected={amount === LITTLE} on:click={handleOnClickSoonEmpty}>Bara lite kvar</button>
-		<button class:selected={amount === MIDDLE} on:click={handleOnClickMedium}>Medelmycket</button>
-		<button class:selected={amount === FULL} on:click={handleOnClickFull}>Full</button>
-		<div class="content">	
-			<Button on:click={addSpice}>Spara kryddan</Button>
-			<Button on:click={buySpice}>Köp!</Button>
-		</div>
-		<footer>
-			<Button on:click={cancel}>Stäng</Button>
-		</footer>
+	<h1>ppaddyrK</h1>
+	<div>
+		<Button on:click={() => (editMode = 'add')}>Plus krydda</Button>
 	</div>
+	{#if editMode === 'add'}
+		<!--<EditSpiceItems spiceName={spiceName} amount={amount} on:addSpice={addSpice} on:cancel={cancelEdit}>	</EditSpiceItems>
+		-->
+		<EditSpiceItems on:save={addSpice} on:buy={buySpice} on:cancel={cancelEdit}></EditSpiceItems>
+	{/if}
 
-
+	
+	<p>Dina kryddor:</p>
 	<ul class="spice_list">		
 		{#each Object.keys(spiceItems) as name}
 			<li> {name} </li>
@@ -81,6 +65,16 @@ function handleOnClickFull() {
 			<p>Din kryddlåda är just nu tom :(</p>
 		{/each}
 	</ul>
+
+{#if Object.keys(buySpiceItems).length}
+	<p>Att köpa:</p>
+	<ul class="spice_list_buy">		
+		{#each Object.keys(buySpiceItems) as name}
+			<li> {name} </li>
+		{/each}
+	</ul>
+{/if}
+
 </main>
 
 <style>
@@ -109,31 +103,9 @@ function handleOnClickFull() {
 		list-style-type: none;
 	}
 
-	.modal-backdrop {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.75);
-    z-index: 10;
-  }
-
-  .modal {
-    position: fixed;
-    top: 10vh;
-    left: 10%;
-    width: 80%;
-    max-height: 80vh;
-    background: white;
-    border-radius: 5px;
-    z-index: 100;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
-    overflow: scroll;
-  }
-	.selected {
-    background: #01a129;
-    border-color: #01a129;
-  }
+	.spice_list_buy {
+		color:rgb(83, 18, 6);
+		list-style-type: none;
+	}
 
 </style>
