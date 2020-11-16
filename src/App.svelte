@@ -1,44 +1,39 @@
 <script>
+	import { spiceItemsInStore, buySpiceItemsInStore } from './Spices/spices-store.js'
 	import Header from './UI/Header.svelte';
 	import Button from './UI/Button.svelte';
 	import EditSpiceItems from './Spices/EditSpiceItems.svelte';
 
 	let spiceItems = {};
-	let buySpiceItems ={};
+	let buySpiceItems = {};
+	
+		spiceItemsInStore.subscribe((dataInStore) =>
+			spiceItems = dataInStore
+		);
+
+	 	buySpiceItemsInStore.subscribe((dataInStore) =>
+	 		buySpiceItems = dataInStore
+	 	);
 
 	let editMode;
 
 	function addSpice(event) {
 		console.log(event)
-		const {spiceName, amount} = event.detail;
-		if (spiceName) {
-			if (amount !== 'okänt') {
-				spiceItems = {...spiceItems, [spiceName.toLowerCase()]: {amount}}
-			} else {
-				alert('Ange hur mycket du har av kryddan med knapparna till höger')
-			}
-		} else {
-		alert('Du har inte fyllt i ett kryddnamn')}
+		console.log('vi är i addSpice')
 		}
 
 	function buySpice(event) {
 		console.log(event)
-		const {spiceName} = event.detail;
-		if (Object.keys(spiceItems).find(() => spiceName.toLowerCase())) {
-			alert('Du har redan denna krydda i ditt kryddskåp')
-		} else if (!spiceName) {
-			alert('Du har inte fyllt i ett kryddnamn')
-		}else {
-			buySpiceItems= {...buySpiceItems, [spiceName.toLowerCase()]: {amount:'empty'}}}
-  }
+		console.log('vi är i buySpice')
+	}
 
 	function cancelEdit(event) {
 		editMode = null;
 		console.log(event)
+		console.log('Vi är i cancelEdit')
 	}
 
-	$: console.log(spiceItems);	//detta är ett objekt
-	//$: console.log(Object.keys(spiceList)) //detta är en array
+	$: console.log(spiceItems);
 	$: console.log(buySpiceItems);
 </script>
 
