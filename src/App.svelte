@@ -19,10 +19,12 @@
 
 	//searchspice, gör en funktion som kollar i store
 	function goSearchSpice() {
-		if (Object.keys(spiceItems).find(searchedSpice)) {
+		if (Object.keys(spiceItems).find((item) => item === searchedSpice)) {
 			console.log("You already have this spice");
+		} else if (Object.keys(buySpiceItems).find((item) => item === searchedSpice)){
+			console.log("You want to buy this spice!")
 		} else {
-			console.log("I either did something wrong or you dont have this spice");
+			console.log("You dont have this spice");
 		}
 	}
 
