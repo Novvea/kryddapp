@@ -6,26 +6,24 @@
 
 	let spiceItems = {};
 	let buySpiceItems = {};
+	let searchedSpice;
+	let editMode;
 	
 		spiceItemsInStore.subscribe((dataInStore) =>
 			spiceItems = dataInStore
 		);
-
 	 	buySpiceItemsInStore.subscribe((dataInStore) =>
 	 		buySpiceItems = dataInStore
 	 	);
 
-	let editMode;
-
-	function addSpice(event) {
-		console.log(event)
-		console.log('vi är i addSpice')
+	//searchspice, gör en funktion som kollar i store
+	function goSearchSpice() {
+		if (Object.keys(spiceItems).find(searchedSpice)){
+			console.log('You already have this spice')
+		} else {
+			console.log('I either did something wrong or you dont have this spice')
 		}
-
-	function buySpice(event) {
-		console.log(event)
-		console.log('vi är i buySpice')
-	}
+	};
 
 	function cancelEdit(event) {
 		editMode = null;
@@ -33,6 +31,7 @@
 		console.log('Vi är i cancelEdit')
 	}
 
+ 
 	$: console.log(spiceItems);
 	$: console.log(buySpiceItems);
 </script>
@@ -40,18 +39,19 @@
 <Header />
 
 <main>
-
 	<h1>ppaddyrK</h1>
+		<div> 
+			<input type="text" bind:value={searchedSpice}>
+			<Button on:click={goSearchSpice}>Sök</Button>
+		</div>
 	<div>
 		<Button on:click={() => (editMode = 'add')}>Plus krydda</Button>
 	</div>
+	
 	{#if editMode === 'add'}
-		<!--<EditSpiceItems spiceName={spiceName} amount={amount} on:addSpice={addSpice} on:cancel={cancelEdit}>	</EditSpiceItems>
-		-->
-		<EditSpiceItems on:save={addSpice} on:buy={buySpice} on:cancel={cancelEdit}></EditSpiceItems>
+		<EditSpiceItems on:cancel={cancelEdit}></EditSpiceItems>
 	{/if}
 
-	
 	<p>Dina kryddor:</p>
 	<ul class="spice_list">		
 		{#each Object.keys(spiceItems) as name}
@@ -84,6 +84,12 @@
 		color: #cfa828;
 		text-transform: uppercase;
 		font-size: 4em;
+		font-weight: 100;
+	}
+	h2 {
+		color: #cfa828;
+		text-transform: uppercase;
+		font-size: 2em;
 		font-weight: 100;
 	}
 

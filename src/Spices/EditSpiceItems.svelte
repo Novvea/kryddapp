@@ -20,7 +20,7 @@ const FULL = 'typ full'
 
 const dispatch = createEventDispatcher();
 
-	function handleOnClickSoonEmpty() {
+/*	function handleOnClickSoonEmpty() {
 		amount = LITTLE
 	}
 	function handleOnClickMedium() {
@@ -28,7 +28,7 @@ const dispatch = createEventDispatcher();
 	}
 	function handleOnClickFull() {
 		amount = FULL
-	}
+	}*/
 
 	function addSpice() {
 		if (spiceName) {
@@ -43,7 +43,7 @@ const dispatch = createEventDispatcher();
 			return {[newSpiceObject.name.toLowerCase()]: newSpiceObject, ...oldData}
 			})
 		} else {
-				alert('Ange hur mycket du har av kryddan med knapparna till höger')
+				alert('Ange hur mycket du har av kryddan med radio-knapparna under')
 			}
 		} else {
 			alert('Du har inte fyllt i ett kryddnamn')
@@ -85,9 +85,21 @@ const dispatch = createEventDispatcher();
 <Modal title="Fyll i din krydda här:" on:cancel>
 		<input type="text" bind:value={spiceName} />
 		<!--<input type="text" bind:value={spiceId} /> -->
-		<button class:selected={amount === LITTLE} on:click={handleOnClickSoonEmpty}>Bara lite kvar</button>
+		<label>
+			<input type="radio" name="amount" value={LITTLE} bind:group={amount}>
+			Bara lite kvar
+		</label>
+		<label>
+			<input type="radio" name="amount" value={MIDDLE} bind:group={amount}>
+			Medelmycket
+		</label>
+		<label>
+			<input type="radio" name="amount" value={FULL} bind:group={amount}>
+			Typ full
+		</label>
+	<!--	<button class:selected={amount === LITTLE} on:click={handleOnClickSoonEmpty}>Bara lite kvar</button>
 		<button class:selected={amount === MIDDLE} on:click={handleOnClickMedium}>Medelmycket</button>
-		<button class:selected={amount === FULL} on:click={handleOnClickFull}>Full</button>   
+		<button class:selected={amount === FULL} on:click={handleOnClickFull}>Full</button> -->   
 		<div slot="footer">
 			<Button on:click={addSpice} >Spara kryddan</Button>
 			<Button on:click={buySpice}>Köp!</Button>
@@ -96,8 +108,8 @@ const dispatch = createEventDispatcher();
   </Modal>
   
   <style>
-  .selected {
+ /* .selected {
     background: #01a129;
     border-color: #01a129;
-  }
+  }*/
   </style>
