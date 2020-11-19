@@ -1,76 +1,40 @@
 <script>
-	import { spiceItemsInStore, buySpiceItemsInStore } from './Spices/spices-store.js'
-	import Header from './UI/Header.svelte';
-	import Button from './UI/Button.svelte';
-	import EditSpiceItems from './Spices/EditSpiceItems.svelte';
+	import {
+		spiceItemsInStore,
+		buySpiceItemsInStore,
+	} from "./Spices/spices-store.js";
+	import Header from "./UI/Header.svelte";
+	import Button from "./UI/Button.svelte";
+	import EditSpiceItems from "./Spices/EditSpiceItems.svelte";
 
 	let spiceItems = {};
 	let buySpiceItems = {};
 	let searchedSpice;
 	let editMode;
-	
-		spiceItemsInStore.subscribe((dataInStore) =>
-			spiceItems = dataInStore
-		);
-	 	buySpiceItemsInStore.subscribe((dataInStore) =>
-	 		buySpiceItems = dataInStore
-	 	);
+
+	spiceItemsInStore.subscribe((dataInStore) => (spiceItems = dataInStore));
+	buySpiceItemsInStore.subscribe(
+		(dataInStore) => (buySpiceItems = dataInStore)
+	);
 
 	//searchspice, gör en funktion som kollar i store
 	function goSearchSpice() {
-		if (Object.keys(spiceItems).find(searchedSpice)){
-			console.log('You already have this spice')
+		if (Object.keys(spiceItems).find(searchedSpice)) {
+			console.log("You already have this spice");
 		} else {
-			console.log('I either did something wrong or you dont have this spice')
+			console.log("I either did something wrong or you dont have this spice");
 		}
-	};
+	}
 
 	function cancelEdit(event) {
 		editMode = null;
-		console.log(event)
-		console.log('Vi är i cancelEdit')
+		console.log(event);
+		console.log("Vi är i cancelEdit");
 	}
 
- 
 	$: console.log(spiceItems);
 	$: console.log(buySpiceItems);
 </script>
-
-<Header />
-
-<main>
-	<h1>ppaddyrK</h1>
-		<div> 
-			<input type="text" bind:value={searchedSpice}>
-			<Button on:click={goSearchSpice}>Sök</Button>
-		</div>
-	<div>
-		<Button on:click={() => (editMode = 'add')}>Plus krydda</Button>
-	</div>
-	
-	{#if editMode === 'add'}
-		<EditSpiceItems on:cancel={cancelEdit}></EditSpiceItems>
-	{/if}
-
-	<p>Dina kryddor:</p>
-	<ul class="spice_list">		
-		{#each Object.keys(spiceItems) as name}
-			<li> {name} </li>
-			{:else}
-			<p>Din kryddlåda är just nu tom :(</p>
-		{/each}
-	</ul>
-
-{#if Object.keys(buySpiceItems).length}
-	<p>Att köpa:</p>
-	<ul class="spice_list_buy">		
-		{#each Object.keys(buySpiceItems) as name}
-			<li> {name} </li>
-		{/each}
-	</ul>
-{/if}
-
-</main>
 
 <style>
 	main {
@@ -100,13 +64,47 @@
 	}
 
 	.spice_list {
-		color:rgb(6, 6, 83);
+		color: rgb(6, 6, 83);
 		list-style-type: none;
 	}
 
 	.spice_list_buy {
-		color:rgb(83, 18, 6);
+		color: rgb(83, 18, 6);
 		list-style-type: none;
 	}
-
 </style>
+
+<Header />
+
+<main>
+	<h1>ppaddyrK</h1>
+	<div>
+		<input type="text" bind:value={searchedSpice} />
+		<Button on:click={goSearchSpice}>Sök</Button>
+	</div>
+	<div>
+		<Button on:click={() => (editMode = 'add')}>Plus krydda</Button>
+	</div>
+
+	{#if editMode === 'add'}
+		<EditSpiceItems on:cancel={cancelEdit} />
+	{/if}
+
+	<p>Dina kryddor:</p>
+	<ul class="spice_list">
+		{#each Object.keys(spiceItems) as name}
+			<li>{name}</li>
+		{:else}
+			<p>Din kryddlåda är just nu tom :(</p>
+		{/each}
+	</ul>
+
+	{#if Object.keys(buySpiceItems).length}
+		<p>Att köpa:</p>
+		<ul class="spice_list_buy">
+			{#each Object.keys(buySpiceItems) as name}
+				<li>{name}</li>
+			{/each}
+		</ul>
+	{/if}
+</main>
