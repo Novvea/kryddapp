@@ -2,6 +2,7 @@
 	import {
 		spiceItemsInStore,
 		buySpiceItemsInStore,
+		allSpicesLibrary,
 	} from "./Spices/spices-store.js";
 	import Header from "./UI/Header.svelte";
 	import Button from "./UI/Button.svelte";
@@ -11,11 +12,13 @@
 	let buySpiceItems = {};
 	let searchedSpice;
 	let editMode;
+	let allSpices;
 
 	spiceItemsInStore.subscribe((dataInStore) => (spiceItems = dataInStore));
 	buySpiceItemsInStore.subscribe(
 		(dataInStore) => (buySpiceItems = dataInStore)
 	);
+	allSpicesLibrary.subscribe((dataInStore) => (allSpices = dataInStore));
 
 	//searchspice, gör en funktion som kollar i store
 	function goSearchSpice() {
@@ -36,6 +39,7 @@
 
 	$: console.log(spiceItems);
 	$: console.log(buySpiceItems);
+	$: console.log(Object.keys(allSpices));
 </script>
 
 <style>
@@ -83,6 +87,12 @@
 	<div>
 		<input type="text" bind:value={searchedSpice} />
 		<Button on:click={goSearchSpice}>Sök</Button>
+	</div>
+	<div>
+		{#if searchedSpice && searchedSpice.length >= 2}
+				<p>Menar du kanske {Object.keys(allSpices).filter(s => s.includes(searchedSpice))}</p>
+				
+		{/if}
 	</div>
 	<div>
 		<Button on:click={() => (editMode = 'add')}>Plus krydda</Button>

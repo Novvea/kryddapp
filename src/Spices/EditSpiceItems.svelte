@@ -4,12 +4,7 @@
 	import Button from "../UI/Button.svelte";
 	import Modal from "../UI/Modal.svelte";
 
-	//hämta ev in det som finns i store
-	//dvs spiceItemsInStore som innehåller salt och peppar
-	//uppdatera min store för krydoor i kryddskåpet
-
 	let spiceName;
-	//let spiceId;
 	let amount = "okänt";
 	let newSpiceObject;
 	let newSpiceObjectToBuy;
@@ -19,16 +14,6 @@
 	const FULL = "typ full";
 
 	const dispatch = createEventDispatcher();
-
-	/*	function handleOnClickSoonEmpty() {
-		amount = LITTLE
-	}
-	function handleOnClickMedium() {
-		amount = MIDDLE
-	}
-	function handleOnClickFull() {
-		amount = FULL
-	}*/
 
 	function addSpice() {
 		if (spiceName) {
@@ -50,13 +35,8 @@
 			}
 		} else {
 			alert("Du har inte fyllt i ett kryddnamn");
-		}
+		}}
 
-		//dispatch('save')
-		//console.log(newSpiceObject)
-	}
-
-	//FORTSÄTT HÄR!
 	function buySpice() {
 		newSpiceObjectToBuy = {
 			name: spiceName.toLowerCase(),
@@ -70,15 +50,6 @@
 				...oldData,
 			};
 		});
-		//dispatch('buy')
-
-		/*	if (Object.keys(spiceItems).find(() => spiceName.toLowerCase())) {
-			alert('Du har redan denna krydda i ditt kryddskåp')
-		} else if (!spiceName) {
-			alert('Du har inte fyllt i ett kryddnamn')
-		}else {
-			buySpiceItems= {...buySpiceItems, [spiceName.toLowerCase()]: {amount:'empty'}}}
-	*/
 	}
 
 	function cancel() {

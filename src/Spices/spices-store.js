@@ -1,7 +1,7 @@
 import { writable } from 'svelte/store'
 
+import { allSpices } from './allSpices'
 
-//we can start by adding some initial data
 export const spiceItemsInStore = writable({
   salt: {
     name: 'Salt',
@@ -18,7 +18,14 @@ export const spiceItemsInStore = writable({
 });
 
 export const buySpiceItemsInStore = writable({
+  kummin: {
+    name: 'kummin',
+    amount: 'bara lite kvar',
+    id: Math.random(),
+    lastUpdated: new Date()
+  }
 });
 
-//export const spiceItemsInStore; 
-//export const buySpiceItemsInStore;
+export const allSpicesLibrary = writable ({
+  ...allSpices
+});
