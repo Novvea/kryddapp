@@ -75,32 +75,36 @@
 	</div>
 
 <!--	KRYDDSKÅPET -->
-	<div class="mySpices_div app_div">
-	<h1>Dina kryddor:</h1>
-	<ul class="spice_list">
-		{#each Object.keys(spiceItems) as name}
-		<li>{name}</li>
-		<select bind:value={selected} on:blur={() => answer = ''}>
-			{#each amountArray as arrayAnswer}
-				<option value={arrayAnswer}>
-					{arrayAnswer.text}
-				</option>
-			{/each}
-		</select>
-	<p>{spiceItems[name].amount}</p>
-		{:else}
-			<p>Din kryddlåda är just nu tom :(</p>
-		{/each}
-	</ul>	
-	</div>
+	<div class="mySpices_container">
+		<div class="mySpices_content">
+			<h1>Dina kryddor:</h1>
+			<ul class="spice_list">
+				{#each Object.keys(spiceItems) as name}
+					<li class="spice_list_item">
+						<div class="spice_name">{name}</div>
+						<select bind:value={selected} on:blur={() => answer = ''} class="spice_amount">
+							{#each amountArray as arrayAnswer}
+								<option value={arrayAnswer}>
+									{arrayAnswer.text}
+								</option>
+							{/each}
+						</select>
+					</li>
+				{:else}
+					<p>Din kryddlåda är just nu tom :(</p>
+				{/each}
+			</ul>	
+			</div>
+		</div>
+	
 
 <!--	KÖP -->	
-<div class="toBuy_div app_div">
+<div class="toBuy_div">
 	{#if Object.keys(buySpiceItems).length}
 		<h1>Att köpa:</h1>
-		<ul class="spice_list_buy app_div">
+		<ul class="spice_list_buy">
 			{#each Object.keys(buySpiceItems) as name}
-				<li>{name}</li>
+				<li class="spice_list_item">{name}</li>
 			{/each}
 		</ul>
 	{/if}
@@ -120,8 +124,9 @@
 	h1 {
 		color: #cfa828;
 		text-transform: uppercase;
-		font-size: 4em;
+		font-size: 3em;
 		font-weight: 100;
+		margin: 0;
 	}
 	h2 {
 		color: #cfa828;
@@ -139,16 +144,27 @@
 	.spice_list {
 		color: rgb(6, 6, 83);
 		list-style-type: none;
+		padding: 0;
+	}
+
+	.spice_list_item {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 1rem;
+		background: rgb(207, 168, 40, 0.33);
+		margin: 1rem 0;
+		border-radius: 10px;
 	}
 
 	.spice_list_buy {
 		color: rgb(83, 18, 6);
 		list-style-type: none;
+		max-width: 768px;
+		margin: 0 auto;
+		padding: 0;
 	}
 
-	.app_div {
-
-	}
 	.search_container {
 		width: 100%;
 		padding-top: 5rem;
@@ -172,13 +188,31 @@
 		border-radius: 6px;
 	}
 
-	.mySpices_div {
-		padding: 2rem;
-		background: rgb(10 140 70);
+	.mySpices_container {
+		background: rgb(10, 140, 70);
+		display: flex;
+		align-items: center;
+		justify-content: center;
 	}
+
+	.mySpices_content {
+		flex: 1;
+		max-width: 768px;
+	}
+
+	.spice_name {
+		flex: 1;
+		text-align: left;
+		font-weight: bold;
+		text-transform: capitalize;
+	}
+
+	.spice_amount {
+		flex: 1;
+	}
+
 	.toBuy_div {
 		padding: 2rem;
-		background:#ccc;
 	}
 </style>
 

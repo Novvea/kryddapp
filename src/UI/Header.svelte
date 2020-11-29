@@ -29,7 +29,7 @@ function cancelEdit(event) {
     top: 0;
     left: 0;
     height: 5rem;
-    background: #d4d4d4;
+    background: #fff;
     box-shadow: 0 2px 6px rgb(0,0,0,0.26);
     display: flex;
     flex-direction: column;
