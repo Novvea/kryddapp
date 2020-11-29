@@ -12,8 +12,10 @@ function cancelEdit(event) {
 </script>
 
 <header>
-  <h1>Kryddapp</h1>
-  <Button on:click={() => (editMode = 'add')}>Plus krydda</Button>
+  <div class="headerContent">
+    <h1>Kryddapp</h1>
+    <Button on:click={() => (editMode = 'add')}>Plus krydda</Button>
+  </div>
 </header>
 
 {#if editMode === 'add'}
@@ -26,18 +28,28 @@ function cancelEdit(event) {
     width: 100%;
     top: 0;
     left: 0;
-    height: 4rem;
+    height: 5rem;
     background: #d4d4d4;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     box-shadow: 0 2px 6px rgb(0,0,0,0.26);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .headerContent {
+    display: flex;
+    flex: 1;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 768px;
+    margin: 0 auto;
+    line-height: 1;
   }
 
   h1 {
     color: #cfa828;
 		text-transform: uppercase;
-		font-size: 4em;
+		font-size: 3em;
 		font-weight: 100;
     margin: 0;
   }
