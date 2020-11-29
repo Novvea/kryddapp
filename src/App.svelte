@@ -58,9 +58,11 @@
 
 <main>
 <!--	SÖK -->
-	<div class="search_div">
-		<input type="text" bind:value={searchedSpice} />
-		<Button on:click={goSearchSpice}>Sök</Button>
+	<div class="search_container">
+		<div class="search_content">
+			<input type="text" bind:value={searchedSpice} class="search_input" />
+			<Button on:click={goSearchSpice}>Sök</Button>
+		</div>
 	</div>
 	<div>
 		{#if searchedSpice && searchedSpice.length >= 2}
@@ -144,14 +146,30 @@
 		list-style-type: none;
 	}
 
-	.app_div{
+	.app_div {
 
 	}
-	.search_div {
-		padding: 2rem;
-		padding-top: 8rem;
+	.search_container {
+		width: 100%;
+		padding-top: 5rem;
 		background:chocolate;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
 
+	.search_content {
+		flex: 1;
+		padding: 2rem;
+		max-width: 768px;
+		display: flex;
+	}
+
+	.search_input {
+		flex: 1;
+		max-width: 768px;
+		margin-right: 16px;
+		border-radius: 6px;
 	}
 
 	.mySpices_div {
