@@ -20,7 +20,7 @@ export const spiceItemsInStore = writable({
 export const buySpiceItemsInStore = writable({
   kummin: {
     name: 'kummin',
-    amount: 'bara lite kvar',
+    amount: 'empty',
     id: Math.random(),
     lastUpdated: new Date()
   }

@@ -1,19 +1,21 @@
 <script>
 	import { spiceItemsInStore, buySpiceItemsInStore } from "./spices-store.js";
-	import { createEventDispatcher } from "svelte";
+	//import { createEventDispatcher } from "svelte";
 	import Button from "../UI/Button.svelte";
 	import Modal from "../UI/Modal.svelte";
+	import { LITTLE, MIDDLE, FULL } from "./amount"
+
 
 	let spiceName;
 	let amount = "okänt";
 	let newSpiceObject;
 	let newSpiceObjectToBuy;
 
-	const LITTLE = "bara lite kvar";
-	const MIDDLE = "medelmycket kvar";
-	const FULL = "typ full";
+//	export const LITTLE = "bara lite kvar";
+//	export const MIDDLE = "medelmycket kvar";
+//	export const FULL = "typ full";
 
-	const dispatch = createEventDispatcher();
+//	const dispatch = createEventDispatcher();
 
 	function addSpice() {
 		if (spiceName) {

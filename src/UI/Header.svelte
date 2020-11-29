@@ -1,6 +1,24 @@
+<script>
+import Button from "./Button.svelte";
+import EditSpiceItems from '../Spices/EditSpiceItems.svelte'
+
+let editMode;
+
+function cancelEdit(event) {
+		editMode = null;
+		console.log(event);
+		console.log("Vi är i cancelEdit");
+	}
+</script>
+
 <header>
   <h1>Kryddapp</h1>
+  <Button on:click={() => (editMode = 'add')}>Plus krydda</Button>
 </header>
+
+{#if editMode === 'add'}
+<EditSpiceItems on:cancel={cancelEdit} />
+{/if}
 
 <style>
   header {
