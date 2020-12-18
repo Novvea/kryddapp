@@ -13,19 +13,15 @@
 	let buySpiceItems = {};
 	let searchedSpice;
 	let allSpices;
-//	let amount;
-	let selected;
-	let answer = '';
 
 	let amountArray = [
-		{text:LITTLE},
-		{text:MIDDLE},
-		{text:FULL},
-	//	{id:4, text:EMPTY}
+		LITTLE,
+		MIDDLE,
+		FULL,
 	];
-//	console.log(LITTLE, MIDDLE, FULL)
 
 	spiceItemsInStore.subscribe((dataInStore) => (spiceItems = dataInStore));
+		console.log(spiceItems);
 	buySpiceItemsInStore.subscribe(
 		(dataInStore) => (buySpiceItems = dataInStore)
 	);
@@ -47,11 +43,12 @@
 		console.log(event);
 		console.log("Vi är i cancelEdit");
 	}*/
-
+	
 	$: console.log(spiceItems);
 	$: console.log(buySpiceItems);
 	$: console.log(Object.keys(allSpices));
-	$: console.log(selected)
+
+
 </script>
 
 <Header />
@@ -79,16 +76,17 @@
 		<div class="mySpices_content">
 			<h1>Dina kryddor:</h1>
 			<ul class="spice_list">
-				{#each Object.keys(spiceItems) as name}
+				{#each Object.keys(spiceItems) as spiceId}
 					<li class="spice_list_item">
-						<div class="spice_name">{name}</div>
-						<select bind:value={selected} on:blur={() => answer = ''} class="spice_amount">
-							{#each amountArray as arrayAnswer}
-								<option value={arrayAnswer}>
-									{arrayAnswer.text}
+						<div class="spice_name">{spiceItems[spiceId].name}</div>
+
+					<select bind:value={spiceItems[spiceId].amount} class="spice_amount">
+							{#each amountArray as amountItem}
+								<option value={amountItem}>
+									{amountItem} 
 								</option>
 							{/each}
-						</select>
+						</select> 
 					</li>
 				{:else}
 					<p>Din kryddlåda är just nu tom :(</p>

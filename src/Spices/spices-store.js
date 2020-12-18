@@ -6,23 +6,17 @@ export const spiceItemsInStore = writable({
   salt: {
     name: 'Salt',
     amount: 'medelmycket kvar',
-    id: Math.random(),
-    lastUpdated: new Date()
   },
   peppar: {
     name: 'Peppar',
     amount: 'bara lite kvar',
-    id: Math.random(),
-    lastUpdated: new Date()
   }
 });
 
 export const buySpiceItemsInStore = writable({
   kummin: {
-    name: 'kummin',
+    name: 'Kummin',
     amount: 'empty',
-    id: Math.random(),
-    lastUpdated: new Date()
   }
 });
 
