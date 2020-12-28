@@ -1,6 +1,6 @@
 import { writable } from 'svelte/store'
 
-import { allSpices } from './allSpices'
+import { spiceLibrary } from './spiceLibrary'
 
 export const spiceItemsInStore = writable({
   salt: {
@@ -20,6 +20,27 @@ export const buySpiceItemsInStore = writable({
   }
 });
 
+
+const spiceLibraryAsObjects = spiceLibrary.reduce( (accumulator, currentSpiceValue) => {
+  return {...accumulator, [currentSpiceValue]: { name: currentSpiceValue, amount: 'okänt'}}
+}, {})
+
+
 export const allSpicesLibrary = writable ({
-  ...allSpices
+  ...spiceLibraryAsObjects
 });
+
+
+// vi har en array som heter spiceLibrary
+//vi vill göra om den till ett object som innehåller namn-properties och amount-properties
+// vi kan mappa genom att säga
+
+
+
+
+/*citronmeliss: {
+  name: 'citronmeliss',
+  amount: 'okänt',
+  id: Math.random(),
+  lastUpdated: new Date()
+},*/

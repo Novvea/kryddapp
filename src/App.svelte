@@ -12,8 +12,9 @@
 	let spiceItems = {};
 	let buySpiceItems = {};
 	let searchedSpice;
-	let allSpices;
-
+	let spiceLibrary;
+	let spiceButton;
+	let suggestedSpice; 
 	let amountArray = [
 		LITTLE,
 		MIDDLE,
@@ -21,11 +22,11 @@
 	];
 
 	spiceItemsInStore.subscribe((dataInStore) => (spiceItems = dataInStore));
-		console.log(spiceItems);
+	//	console.log('spiceItems:',spiceItems);
 	buySpiceItemsInStore.subscribe(
 		(dataInStore) => (buySpiceItems = dataInStore)
 	);
-	allSpicesLibrary.subscribe((dataInStore) => (allSpices = dataInStore));
+	allSpicesLibrary.subscribe((dataInStore) => (spiceLibrary = dataInStore));
 
 	//searchspice, gör en funktion som kollar i store
 	function goSearchSpice() {
@@ -38,16 +39,31 @@
 		}
 	}
 
+	function serachedSpiceAction() {
+		alert('You clicked on a spice from spiceLibrary' )
+	}
+
 /*	function cancelEdit(event) {
 		editMode = null;
 		console.log(event);
 		console.log("Vi är i cancelEdit");
 	}*/
 	
-	$: console.log(spiceItems);
-	$: console.log(buySpiceItems);
-	$: console.log(Object.keys(allSpices));
+	//$: console.log(spiceItems);
+	//$: console.log(buySpiceItems);
+	//console.log('SpiceLibrary:')
+	$:console.log('spiceLibrary:', spiceLibrary);
+	$:console.log('Object.keys(spiceLibrary):',Object.keys(spiceLibrary))
+	$:console.log('[searchedSpice]', [searchedSpice])
 
+
+$:{suggestedSpice = Object.keys(spiceLibrary)
+					.map(s => spiceLibrary[s].name)
+					.filter(s => 
+						s.includes(searchedSpice)
+					)}
+
+	$:console.log('suggestedSpice:', suggestedSpice)
 
 </script>
 
@@ -63,11 +79,11 @@
 	</div>
 	<div>
 		{#if searchedSpice && searchedSpice.length >= 2}
-				<p>Menar du kanske {Object.keys(allSpices)
-					.map(s => allSpices[s].name)
-					.filter(s => 
-						s.includes(searchedSpice)
-					)}</p>
+
+					{#each suggestedSpice as spiceButton}
+					<Button on:click={serachedSpiceAction}>{spiceButton}</Button>
+					{/each}
+
 		{/if}
 	</div>
 
@@ -140,7 +156,6 @@
 	}
 
 	.spice_list {
-		color: rgb(6, 6, 83);
 		list-style-type: none;
 		padding: 0;
 	}
@@ -166,7 +181,7 @@
 	.search_container {
 		width: 100%;
 		padding-top: 5rem;
-		background:chocolate;
+		background:rgb(228, 171, 131);
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -187,7 +202,7 @@
 	}
 
 	.mySpices_container {
-		background: rgb(10, 140, 70);
+		background: rgb(119, 168, 142);
 		display: flex;
 		align-items: center;
 		justify-content: center;

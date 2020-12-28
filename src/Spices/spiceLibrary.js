@@ -1,4 +1,13 @@
-export const allSpices = {
+export const spiceLibrary = [
+  'anis', 
+  'citronmeliss',
+  'isop',
+  'salladskrydda'
+]
+
+
+
+/*{
   anis: {
     name: 'anis',
     amount: 'okänt',
@@ -143,4 +152,4 @@ export const allSpices = {
     id: Math.random(),
     lastUpdated: new Date()
   }
-}
+}*/
